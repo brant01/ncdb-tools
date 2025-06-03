@@ -13,6 +13,8 @@ build/
 
 # Data - NEVER commit any data files
 data/
+docs/
+scripts/
 *.csv
 *.txt
 *.dat
@@ -21,6 +23,8 @@ data/
 *.json
 *.xml
 *.sas
+*.pdf
+*.rtf
 
 # Documentation/instruction files
 development-guidelines.md

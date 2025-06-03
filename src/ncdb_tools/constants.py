@@ -1,6 +1,6 @@
 """Constants for NCDB Tools."""
 
-from typing import Set, List
+from typing import List, Set
 
 # File patterns
 DATA_FILE_PATTERN = "NCDBPUF_*.dat"
@@ -13,7 +13,7 @@ NCDB_COLUMN_COUNT = 338
 # Columns that should never be converted to numeric
 NEVER_NUMERIC_COLUMNS: Set[str] = {
     "PUF_CASE_ID",
-    "PUF_FACILITY_ID", 
+    "PUF_FACILITY_ID",
     "PRIMARY_SITE",
     "HISTOLOGY",
     "HISTOLOGY_ICDO3",
@@ -29,11 +29,11 @@ NEVER_NUMERIC_COLUMNS: Set[str] = {
 
 # Standard column groups for convenience
 DEMOGRAPHIC_COLUMNS: List[str] = [
-    "AGE", 
-    "SEX", 
-    "RACE", 
+    "AGE",
+    "SEX",
+    "RACE",
     "SPANISH_HISPANIC_ORIGIN",
-    "INSURANCE_STATUS", 
+    "INSURANCE_STATUS",
     "CDCC_TOTAL_BEST",
     "MED_INC_QUAR_00",
     "NO_HSD_QUAR_00",
@@ -42,7 +42,7 @@ DEMOGRAPHIC_COLUMNS: List[str] = [
 
 TREATMENT_COLUMNS: List[str] = [
     "RX_SUMM_SURG_PRIM_SITE",
-    "RX_SUMM_RADIATION", 
+    "RX_SUMM_RADIATION",
     "RX_SUMM_CHEMO",
     "RX_SUMM_HORMONE",
     "RX_SUMM_IMMUNOTHERAPY",
@@ -61,7 +61,7 @@ OUTCOME_COLUMNS: List[str] = [
 TUMOR_TYPES: List[str] = [
     "BoneJont",
     "Brain",
-    "CNS", 
+    "CNS",
     "EyeOrbit",
     "GumOtMth",
     "HodgExtr",
