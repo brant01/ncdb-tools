@@ -1,0 +1,758 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Value Label Library\
+\
+Values for Collaborative Stage Site Specific Factors 1-25 Vary by Cancer Site\
+Refer to the Collaborative Stage Website to obtain the Site Specific Factor Values for each cancer site\
+\
+https://cancerstaging.org/cstage/schema/Pages/version0205.aspx\
+\
+Values for the Diagnostic_Confirmation variable are different for solid tumors as compared to \
+hematopoietic and lymphoid tumors.  Refer to the PUF data dictionary for the code values and instructions\
+for coding for this variable.\
+\
+*************************************************************************************************************************;\
+\
+PROC FORMAT LIBRARY = library;\
+COMMENT PUF Data Item Name: FACILITY_TYPE_CD;\
+COMMENT suppressed for ages 0-39;\
+VALUE $ffacility\
+'1' = 'Community Cancer Program'\
+'2' = 'Comprehensive Community Cancer Program'\
+'3' = 'Academic/Research Program'\
+'4' = 'Integrated Network Cancer Program'\
+'9' = 'Other specified types of cancer programs';\
+COMMENT PUF Data Item Name: FACILITY_LOCATION_CD;\
+COMMENT suppressed for ages 0-39;\
+VALUE $ffac_location\
+'1' = 'New England' \
+'2' = 'Middle Atlantic' \
+'3' = 'South Atlantic' \
+'4' = 'East North Central' \
+'5' = 'East South Central'\
+'6' = 'West North Central' \
+'7' = 'West South Central' \
+'8' = 'Mountain' \
+'9' = 'Pacific' ;\
+COMMENT PUF Data Item Name: AGE; \
+VALUE $fage\
+'000' = '< age 1' \
+'090' = 'Ninety years old or older'\
+'999' = 'Age unknown';\
+COMMENT PUF Data Item Name: SEX;\
+COMMENT suppressed for values not Male or Female;\
+VALUE $fsex 	\
+'1' = 'Male'\
+'2' = 'Female' ;\
+COMMENT PUF Data Item Name: RACE;\
+VALUE $frace \
+'01' = 'White'\
+'02' = 'Black' \
+'03' = 'American Indian, Aleutian, or Eskimo' \
+'04' = 'Chinese'\
+'05' = 'Japanese' \
+'06' = 'Filipino' \
+'07' = 'Hawaiian' \
+'08' = 'Korean' \
+'10' = 'Vietnamese' \
+'11' = 'Laotian' \
+'12' = 'Hmong' \
+'13' = 'Kampuchean' \
+'14' = 'Thai' \
+'15' = 'Asian Indian or Pakistani,NOS'\
+'16' = 'Asian Indian'\
+'17' = 'Pakistani'\
+'20' = 'Micronesian,NOS'\
+'21' = 'Chamorro/Chamoru' \
+'22' = 'Guamanian, NOS' \
+'25' = 'Polynesian, NOS' \
+'26' = 'Tahitian' \
+'27' = 'Samoan'\
+'28' = 'Tongan' \
+'30' = 'Melanesian, NOS' \
+'31' = 'Fiji Islander' \
+'32' = 'New Guinean' \
+'96' = 'Other Asian, including Asian, NOS and Oriental, NOS'\
+'97' = 'Pacific Islander, NOS' \
+'98' = 'Other' \
+'99' = 'Unknown';\
+COMMENT PUF Data Item Name: SPANISH_HISPANIC_ORIGIN;\
+VALUE $fhispanic	\
+'0' = 'Non-Spanish, non-Hispanic' \
+'1' = 'Mexican/Chicano' \
+'2' = 'Puerto Rican' \
+'3' = 'Cuban'\
+'4' = 'South or Central America' \
+'5' = 'Other specified Spanish/Hispanic origin'\
+'6' = 'Spanish, NOS Hispanic, NOS Latino, NOS' \
+'7' = 'Spanish surname only'\
+'8' = 'Dominican Republic' \
+'9' = 'Unknown';\
+COMMENT PUF Data Item Name: INSURANCE_STATUS;\
+VALUE $finsurance	\
+'0' = 'Not Insured' \
+'1' = 'Private Insurance' \
+'2' = 'Medicaid' \
+'3' = 'Medicare' \
+'4' = 'Other Government' \
+'9' = 'Insurance Status Unknown';\
+COMMENT PUF Data Item Name: MED_INC_QUAR_00;\
+VALUE $f00income	\
+'1' = '< $30,000' \
+'2' = '$30,000-$34,999' \
+'3' = '$35,000-$45,999'\
+'4' = '>= $46,000' \
+'9' = 'Not Available';\
+COMMENT PUF Data Item Name: NO_HSD_QUAR_00;\
+VALUE $f00hsd	\
+'1' = '>= 29%' \
+'2' = '20-28.9%' \
+'3' = '14-19.9%' \
+'4' = '< 14%'\
+'9' = 'Not Available';\
+COMMENT PUF Data Item Name: UR_CD_03 UR_CD_13; \
+VALUE $fur03_cd	\
+'1' = 'Counties in metro areas of 1 million population or more'\
+'2' = 'Counties in metro areas of 250,000 to 1 million population'\
+'3' = 'Counties in metro areas of fewer than 250,000 population'\
+'4' = 'Urban population of 20,000 or more adjacent to a metro area'\
+'5' = 'Urban population of 20,000 or more not adjacent to a metro area'\
+'6' = 'Urban population of 2,500 to 19,999, adjacent to a metro area'\
+'7' = 'Urban population of 2,500 to 19,999, not adjacent to a metro area'\
+'8' = 'Completely rural or less than 2,500 urban population, adjacent to a metro area'\
+'9' = 'Completely rural or less than 2,500 urban population, not adjacent to a metro area';\
+COMMENT PUF Data Item Name: MED_INC_QUAR_12;\
+VALUE $f12income\
+'1' = '< $38,000'\
+'2' = '$38,000-$47,999'\
+'3' = '$48,000-$62,999'\
+'4' = '>= $63,000'\
+'9' = 'Not Available';\
+COMMENT PUF Data Item Name: NO_HSD_QUAR_12;\
+VALUE $f12hsd\
+'1' = '>= 21%'\
+'2' = '13.0-20.9%'\
+'3' = '7.0-12.9%'\
+'4' = '< 7.0%';\
+COMMENT PUF Data Item: CDCC_TOTAL_BEST;\
+VALUE $fcdcc \
+'0' = '0' \
+'1' = '1' \
+'2' = '2' \
+'3' = '>= 3';\
+COMMENT PUF Data Item Name: CLASS_OF_CASE;\
+VALUE $fclass\
+'00' = 'Dx at reporting facility, all treatment decisions done elsewhere'\
+'10' = 'Dx and part or all of 1st course treatment or a decision not to treat was at the reporting facility, NOS'\
+'11' = 'Dx in staff physician"s office and part of 1st course treatment at the reporting facility'\
+'12' = 'Dx in a staff physician"s office and all of 1st course treatment at the reporting facility'\
+'13' = 'Dx and part of first course Rx at reporting facility, part of first course treatment elsewhere'\
+'14' = 'Dx at reporting facility and all first course treatment at the reporting facility'\
+'20' = 'Dx elsewhere and all or part of 1st course treatment or a decision not to treat at the reporting facility, NOS'\
+'21' = 'Dx elsewhere and part of 1st course treatment at the reporting facility part of first course treatment elsewhere'\
+'22' = 'Dx elsewhere and all of first course treatment or a decision not to treat at the reporting facility';\
+COMMENT PUF Data Item Name: LATERALITY;\
+VALUE $flat \
+'0' = 'Organ is not considered to be a paired site'\
+'1' = 'Origin of primary is right'\
+'2' = 'Origin of primary is left'\
+'3' = 'Only one side involved, right or left origin not specified'\
+'4' = 'Bilateral involvement'\
+'5' = 'Paired site midline tumor'\
+'9' = 'Paired site, but lateral origin unknown, midline tumor';\
+COMMENT PUF Data Item Name: BEHAVIOR; \
+VALUE $fbeh\
+'0' = 'Benign'\
+'1' = 'Borderline'\
+'2' = 'Carcinoma in situ'\
+'3' = 'Invasive';\
+COMMENT PUF Data Item Name: GRADE; \
+VALUE $fgrade\
+'1' = 'Well differentiated, differentiated, NOS'\
+'2' = 'Moderately differentiated, moderately well differentiated, intermediate differentiation'\
+'3' = 'Poorly differentiated'\
+'4' = 'Undifferentiated, anaplastic'\
+'5' = 'T cell T-precursor'\
+'6' = 'B cell, pre-B, B-precursor'\
+'7' = 'Null cell non T-non B'\
+'8' = 'NK (natural killer) cell'\
+'9' = 'Cell type not determined, not stated not applicable, unknown primaries, high grade dysplasia';\
+COMMENT PUF Data Item Name: TUMOR_SIZE;\
+COMMENT applicable to 2004 - 2015 diagnosis years;\
+VALUE $ftumor\
+'000' = 'No mass or tumor found'\
+'989' = '989 millimeters or larger'\
+'990' = 'Microscopic focus or foci only'\
+'991' = '< 1 cm'\
+'992' = '> 1 cm, < 2 cm'\
+'993' = '> 2 cm, < 3 cm'\
+'994' = '> 3 cm, < 4 cm'\
+'995' = '> 4 cm, < 5 cm'\
+'998' = 'Tumor involvement of specified primaries'\
+'999' = 'Unknown, size not stated';\
+COMMENT PUF Data Item Name: REGIONAL_NODES_POSITIVE;\
+COMMENT values 1-89 actual nodes positive; \
+VALUE $fnodes_positive\
+'00' = 'All nodes examined are negative'\
+'90' = '90 or more nodes are positive'\
+'95' = 'Positive aspiration of lymph node(s) was performed'\
+'97' = 'Positive nodes are documented, but the number is unspecified'\
+'98' = 'No nodes were examined'\
+'99' = 'Unknown whether nodes are positive, not applicable, not stated in patient record';\
+COMMENT PUF Data Item Name: REGIONAL_NODES_EXAMINED;\
+COMMENT 1-89 actual nodes examined; \
+VALUE $fnodes_examined \
+'00' = 'No nodes were examined'\
+'90' = '90 or more nodes were examined'\
+'95' = 'No regional nodes were removed, but aspiration of regional nodes was performed'\
+'96' = 'Regional lymph node removal was documented as a sampling, and the number of nodes is unknown/not stated'\
+'97' = 'Regional lymph node removal was documented as a dissection, and the number of nodes is unknown/not stated'\
+'98' = 'Regional lymph nodes surgically removed but number not documented, not documented as sampling or dissection'\
+'99' = 'Unknown if regional nodes examined, not applicable for this site-histology combination';\
+COMMENT PUF Data Item Name: RX_SUMM_DXSTG_PROC;\
+VALUE $fsdxstg\
+'00' = 'No surgical diagnostic or staging procedure was performed'\
+'01' = 'A biopsy was done to a site other than the primary'\
+'02' = 'A biopsy (incisional, needle, or aspiration) was done to the primary site'\
+'03' = 'A surgical exploration only'\
+'04' = 'A surgical procedure with a bypass was performed, but no biopsy was done'\
+'05' = 'An exploratory procedure was performed, and a biopsy of either the primary site or another site was done'\
+'06' = 'A bypass procedure was performed, and a biopsy of either the primary site or another site was done'\
+'07' = 'A procedure was done, but the type of procedure is unknown'\
+'09' = 'No information of whether a diagnostic or staging procedure was performed';\
+COMMENT PUF Data Item Name: TNM_EDITION_NUMBER;\
+VALUE $ftnmedit\
+'00' = 'Not staged (cases that have AJCC staging scheme and staging was not done)'\
+'05' = 'Fifth Edition' \
+'06' = 'Sixth Edition' \
+'07' = 'Seventh Edition'\
+'08' = 'Eighth Edition'\
+'88' = 'Not applicable (cases that do not have an AJCC staging scheme)'\
+'99' = 'Staged, but the edition is unknown, Prior to the 5th edition';\
+COMMENT PUF data item: ANALYTIC_STAGE_GROUP;\
+VALUE $fanalyticstage\
+'0' = 'Stage 0'\
+'1' = 'Stage I'\
+'2' = 'Stage II'\
+'3' = 'Stage III'\
+'4' = 'Stage IV'\
+'5' = 'Occult (lung only)'\
+'8' = 'AJCC staging not applicable'\
+'9' = 'AJCC stage group unknown';\
+\
+**************************************************************************************;\
+***PUF Data Items: CS_METS_AT_DX CS_METS_EVAL CS_EXTENSION CS_TUMOR_SIZEEXT_EVAL*****;\
+***SEE COLLABORATIVE STAGE MANUAL SCHEMA AS VALUES VARY BY CANCER SITE***************;\
+***https://cancerstaging.org/cstage/schema/Pages/version0205.aspx;\
+**************************************************************************************;\
+\
+COMMENT VALUES FOR CS_METS_DX_BONE CS_METS_DX_BRAIN CS_METS_DX_LIVER CS_METS_DX_LUNG;\
+COMMENT applicable to 2010 - 2015 diagnosis years;\
+VALUE $csmetssite \
+'0' = 'None' \
+'1' = 'Yes' \
+'8' = 'Not Applicable' \
+'9' = 'Unknown';\
+COMMENT PUF DATA Item: LYMPH_VASCULAR_INVASION;\
+COMMENT applicable to 2010 diagnosis year and later;\
+VALUE $flymph \
+'0' = 'Not present' \
+'1' = 'Present' \
+'8' = 'Not applicable' \
+'9' = 'Unknown';\
+COMMENT PUF Data Item Name: RX_HOSP_SURG_APPR_2010;\
+COMMENT applicable to 2010 diagnosis year and later;\
+VALUE $fapproach \
+'0' = 'No Surgical Procedure of Primary Site'\
+'1' = 'Robotic Assisted'\
+'2' = 'Robotic converted to open'\
+'3' = 'Endoscopic or laparoscopic'\
+'4' = 'Endoscopic or laparoscopic converted to open'\
+'5' = 'Open or approach unspecified'\
+'9' = 'Unknown whether surgery performed at this facility';\
+COMMENT PUF Data Item Name: RX_SUMM_SURGICAL_MARGINS;\
+VALUE $fsurgmargin\
+'0' = 'No residual tumor All margins are grossly and microscopically negative' \
+'1' = 'Residual tumor, NOS, Involvement is indicated, but not otherwise specified'\
+'2' = 'Microscopic residual tumor, Cannot be seen by the naked eye'\
+'3' = 'Macroscopic residual tumor, Gross tumor of primary site which is visible to the naked eye'\
+'7' = 'Margins not evaluable, Cannot be assessed (indeterminate)'\
+'8' = 'No primary site surgery, No surgical procedure of the primary site Diagnosed at autopsy'\
+'9' = 'Unknown or not applicable';\
+\
+/* Scope of Regional Lymph Node Surgery:\
+Sentinel Lymph Nodes:  Data on Scope of Regional Lymph Node Surgery have been found to under-report\
+Sentinel Lymph Node Biopsy. Revised coding rules and associated instructions were implemented\
+for cases diagnosed January 1, 2012 and later, CoC use of the item\
+ Scope of Regional Lymph Node Surgery  diagnosed in 2011 or earlier is curtailed in all CoC data.\
+The item is used only to identify whether or not a patient underwent regional lymph node surgery,\
+effectively removing any distinction between the type or extent of surgical intervention.\
+For breast and skin (melanoma, Merkel cell carcinoma) cancer cases diagnosed prior to 2012,\
+codes for this item are limited to 0, 1 and 9.*/\
+COMMENT PUF Data Item Name RX_SUMM_SCOPE_REG_LN_SUR;\
+VALUE $frxsumm_scope_reg_ln_surg\
+'0' = 'No regional lymph node surgery'\
+'1' = 'Regional lymph node surgery'\
+'9' = 'Unknown if there was any regional lymph node surgery';\
+\
+COMMENT PUF Data Item Name: RX_SUMM_SURG_OTH_REGDIS;\
+VALUE $fsurgotherregdis\
+'0'='None' \
+'1' = 'Nonprimary surgical procedure performed'\
+'2' = 'Nonprimary surgical procedure to other regional sites'\
+'3' = 'Nonprimary surgical procedure to distant lymph node(s)' \
+'4' = 'Nonprimary surgical procedure to distant site'\
+'5' = 'Combination of codes'\
+'9' = 'Unknown';\
+COMMENT PUF Data Item Name: READM_HOSP_30_DAYS;\
+VALUE $freadmission\
+'0' = 'No surgical procedure of the primary site was performed, or patient not readmitted'\
+'1' = 'Unplanned readmission within 30 days of discharge'\
+'2' = 'Planned readmission within 30 days of discharge'\
+'3' = 'Planned and unplanned readmission within 30 days of discharge'\
+'9' = 'Unknown if surgery recommended/performed, unknown if readmitted within 30 days of discharge';\
+COMMENT PUF Data Item Name: REASON_FOR_NO_SURGERY;\
+VALUE $freasonnosurg\
+'0' = 'Surgery of the primary site was performed'\
+'1' = 'Surgery not performed because it was not part of the planned first course treatment'\
+'2' = 'Surgery was not recommended/performed, contraindicated due to patient risk factors'\
+'5' = 'Surgery not performed because the patient died prior to planned or recommended surgery'\
+'6' = 'Surgery was recommended by physician but not performed, No reason was noted in patient record'\
+'7' = 'Surgery was recommended but was refused by the patient, patient"s family member or guardian'\
+'8' = 'Surgery was recommended, but unknown if performed' \
+'9' = 'Unknown if surgery was recommended or performed, Diagnosed at autopsy or death certificate only';\
+COMMENT PUF Data Item Name: RAD_LOCATION_OF_RX;\
+VALUE $fradlocation\
+'0' = 'No radiation therapy administered'\
+'1' = 'All radiation treatment at this facility'\
+'2' = 'Regional treatment at this facility, boost elsewhere'\
+'3' = 'Boost radiation at this facility, regional elsewhere' \
+'4' = 'All radiation treatment elsewhere'\
+'8' = 'Other' \
+'9' = 'Unknown';\
+COMMENT PUF Data Item Name: RX_SUMM_SURGRAD_SEQ;\
+VALUE $fsurgradseq\
+'0' = 'No radiation therapy and/or surgical procedures'\
+'2' = 'Radiation therapy before surgery'\
+'3' = 'Radiation therapy after surgery'\
+'4' = 'Radiation therapy both before and after surgery'\
+'5' = 'Intraoperative radiation therapy'\
+'6' = 'Intraoperative radiation therapy with other therapy administered before or after surgery'\
+'7' = 'Surgery both before and after radiation'\
+'9' = 'Sequence unknown';\
+COMMENT PUF Data Item Name: REASON_FOR_NO_RADIATION;\
+VALUE $freasonnorad\
+'0' = 'Radiation therapy was administered'\
+'1' = 'Radiation was not part of the planned first course treatment'\
+'2' = 'Radiation contraindicated due to other patient risk factors'\
+'5' = 'Patient died prior to planned or recommended therapy'\
+'6' = 'Radiation recommended but not administered, no reason was noted' \
+'7' = 'Radiation recommended but refused by the patient, patient"s family member or guardian' \
+'8' = 'Radiation recommended, unknown whether administered'\
+'9' = 'Unknown if recommended or administered';\
+COMMENT PUF Data Item Names: RX_SUMM_CHEMO, RX_HOSP_CHEMO;\
+VALUE $fchemo\
+'00' = 'None'\
+'01' = 'Chemotherapy administered, type and number of agents not documented'\
+'02' = 'Single-agent chemotherapy'\
+'03' = 'Multiagent chemotherapy'\
+'82' = 'Chemotherapy not recommended/administered, contraindicated due to patient risk factors' \
+'85' = 'Chemotherapy not administered, patient died prior to planned or recommended therapy'\
+'86' = 'Chemotherapy not administered, was recommended, not administered Reason unknown' \
+'87' = 'Chemotherapy not administered, recommended, but refused by patient, patient"s family member or guardian'\
+'88' = 'Chemotherapy recommended, unknown if administered'\
+'99' = 'Unknown if recommended or administered';\
+COMMENT PUF Data Item Name: RX_SUMM_HORMONE RX_HOSP_HORMONE;\
+VALUE $fhormone\
+'00' = 'None'\
+'01' = 'Hormone therapy administered as first course therapy'\
+'82' = 'Not recommended/administered, contraindicated due to patient risk factors' \
+'85' = 'Hormone therapy not administered, patient died prior to planned or recommended therapy'\
+'86' = 'Recommended but not administered, no reason stated' \
+'87' = 'Recommended, not administered, refused by patient, patient"s family member or guardian'\
+'88' = 'Hormone therapy recommended, unknown if administered' \
+'99' = 'Unknown if recommended or administered';\
+COMMENT PUF Data Item Name: RX_SUMM_IMMUNOTHERAPY RX_HOSP_IMMUNOTHERAPY;\
+VALUE $fimmuno\
+'00' = 'None' \
+'01' = 'Immunotherapy administered as first course therapy'\
+'82' = 'Not recommended/administered, contraindicated due to patient risk factors'\
+'85' = 'Not administered because the patient died prior to planned or recommended therapy'\
+'86' = 'Recommended, not administered, No reason given' \
+'87' = 'Recommended, not administered, refused by the patient, patient"s family member or guardian'\
+'88' = 'Immunotherapy recommended, unknown if administered' \
+'99' = 'Unknown';\
+COMMENT PUF Data Item Name: RX_SUMM_TRNSPLNT_ENDO;\
+VALUE $ftrnsplntendo\
+'00' = 'No transplant procedure or endocrine therapy administered' \
+'10' = 'Bone marrow transplant procedure administered, type not specified'\
+'11' = 'Bone marrow transplant, autologous' \
+'12' = 'Bone marrow transplant, allogeneic'\
+'20' = 'Stem cell harvest and infusion' \
+'30' = 'Endocrine surgery and/or endocrine radiation therapy'\
+'40' = 'Combination of endocrine surgery and/or radiation with a transplant procedure' \
+'82' = 'Transplant/endocrine surgery/radiation not recommended/administered, contraindicated due to patient risk factors'\
+'85' = 'Transplant/endocrine surgery/radiation not administered, patient died prior to planned or recommended therapy'\
+'86' = 'Recommended Transplant/endocrine/surgery/radiation but not administered no reason given' \
+'87' = 'Recommended but not administered, treatment refused by patient, patient"s family member or guardian'\
+'88' = 'Hematologic transplant and/or endocrine surgery/radiation recommended, unknown if administered'\
+'99' = 'Unknown if recommended or administered';\
+COMMENT PUF Data Item Name: RX_SUMM_SYSTEMIC_SUR_SEQ;\
+VALUE $fsurgsysseq\
+'0' = 'No systemic therapy and/or no surgery'\
+'2' = 'Systemic therapy before surgery'\
+'3' = 'Systemic therapy after surgery'\
+'4' = 'Systemic therapy before and after surgery'\
+'5' = 'Intraoperative systemic therapy during surgical procedure'\
+'6' = 'Intraoperative systemic therapy with other Rx administered before or after surgery'\
+'7' = 'Surgery both before and after systemic therapy'\
+'9' = 'Sequence unknown';\
+COMMENT PUF Data Item Name: RX_SUMM_OTHER RX_HOSP_OTHER;\
+VALUE $fotherrx\
+'0' = 'None'\
+'1' = 'Other' \
+'2' = 'Other-Experimental'\
+'3' = 'Other-Double Blind'\
+'6' = 'Other-Unproven'\
+'7' = 'Treatment 1, 2 or 3 recommended but refused by patient, patient"s family or guardian'   \
+'8' = 'Recommended unknown if administered'\
+'9' = 'Unknown if recommended or administered';\
+COMMENT PUF Data Item Name: PALLIATIVE_CARE PALLIATIVE_CARE_HOSP;\
+VALUE $fpalliative\
+'0' = 'None' \
+'1' = 'Surgery' \
+'2' = 'Radiation therapy'\
+'3' = 'Chemo, hormone, other systemic drugs' \
+'4' = 'Pain management therapy with no other palliative care'\
+'5' = 'Any combination of codes 1, 2, and/or 3 without code 4'\
+'6' = 'Any combination of codes 1, 2, and/or 3 with code 4'\
+'7' = 'Palliative care performed or referred, type unknown or other than codes 1-6' \
+'9' = 'Unknown if palliative care performed or referred';\
+COMMENT PUF Data Item Name: RX_SUMM_TREATMENT STATUS;\
+VALUE $frxstatus \
+'0' = 'No Treatment Given' \
+'1' = 'Treatment Given' \
+'2' = 'Active Surveillance'\
+'9' = 'Unknown if Treatment Given';\
+COMMENT PUF Data Item Name: PUF_30_DAY_MORT_CD;\
+COMMENT applicable to 2004-2019 diagnosis years;\
+VALUE $f30day\
+'0' = 'Alive or died > 30 days after surgery'\
+'1' = 'Died <= 30 days after surgery'\
+'9' = 'No surgery, or alive cases have < 30 days of follow up';\
+COMMENT PUF Data Item Name: PUF_90_DAY_MORT_CD;\
+COMMENT applicable to 2004-2019 diagnosis years;\
+VALUE $f90day\
+'0' = 'Alive or died > 90 days after surgery'\
+'1' = 'Died <= 90 days after surgery'\
+'9' = 'No surgery, or alive cases have < 90 days of follow up';\
+COMMENT PUF Data Item Name: PUF_VITAL_STATUS;\
+COMMENT applicable to 2004-2019 diagnosis years;\
+VALUE $fvital\
+'0' = 'Dead' \
+'1' = 'Alive';\
+COMMENT PUF Data Item Name: PUF_MULT_SOURCE;\
+VALUE $fmultiple\
+'0' = 'Received Rx in One CoC Facility'\
+'1' = 'Received Rx in > 1 CoC Facility';\
+COMMENT PUF Data Item Name: PUF_REFERENCE_DATE_FLAG;\
+VALUE $frefdate \
+'0' = 'Diagnosis Date Before Reference Date'\
+'1' = 'Diagnosis Date On or After Reference Date';\
+COMMENT PUF Data Item Name: RX_SUMM_SCOPE_REG_LN_2012;\
+COMMENT applicable to 2012 diagnosis year and later;\
+VALUE $fscopereglnsur\
+'0' = 'None, No regional lymph node surgery. No lymph nodes found in the pathologic specimen'\
+'1' = 'Biopsy or aspiration of regional lymph node, NOS'\
+'2' = 'Sentinel lymph node biopsy'\
+'3' = 'Number of regional nodes removed unknown or not stated, regional lymph nodes removed, NOS'\
+'4' = '1-3 regional lymph nodes removed'\
+'5' = '4 or more regional lymph nodes removed'\
+'6' = 'Sentinel node biopsy & code 3, 4, or 5 at same time, or timing not stated'\
+'7' = 'Sentinel node biopsy and code 3, 4, or 5 at different times'\
+'9' = 'Unknown or not applicable';\
+COMMENT PUF Data Item Name: TUMOR_SIZE_SUMMARY_2016;\
+COMMENT applicable to 2016 diagnosis year and later;\
+COMMENT values 2-988 = exact size in mm;\
+VALUE $f2016tumsize \
+'000' = 'No Tumor found' \
+'001' = '1 mm or < 1 mm'\
+'989' = '>= 989 mm'\
+'990' = 'Microscopic focus/foci only/no size of focus'\
+'998' = 'Site Specific Codes' \
+'999' = 'Unknown';\
+COMMENT PUF Data Item Name: METS_AT_DX_OTHER;\
+COMMENT applicable to 2016 diagnosis year and later;\
+VALUE $fmetsdxother  \
+'0'='None' \
+'1'='Yes' \
+'2'='Generalized metastases such as carcinomatosis'\
+'8'='Not Applicable' \
+'9'='Unknown';\
+COMMENT PUF Data Item Names: METS_AT_DX_DISTANT_LN  METS_AT_DX_BONE\
+  METS_AT_DX_BRAIN  METS_AT_DX_LIVER METS_AT_DX_LUNG;\
+COMMENT applicable to 2016 diagnosis year and later;\
+VALUE $fmetsdx  \
+'0' = 'None' \
+'1' = 'Yes' \
+'8' = 'Not Applicable' \
+'9' = 'Unknown';\
+COMMENT PUF Data Item Name: NO_HSD_QUAR_2016; \
+VALUE $f2016ed \
+'1' = '>= 17.6%' \
+'2' = '10.9-17.5%' \
+'3' = '6.3-10.8%' \
+'4' = '< 6.3%';\
+COMMENT PUF Data Item Name: MED_INC_QUAR_2016;\
+VALUE $f2016inc \
+'1' = '< $40,227' \
+'2' = '$40,227-$50,353' \
+'3' = '$50,354-$63,332' \
+'4' = '>= $63,333';\
+COMMENT PUF Data Item Name: PUF_MEDICAID_EXPN_CODE;\
+COMMENT suppressed for ages 0-39;\
+VALUE $fmedicaid \
+'0' = 'Non-expansion States'\
+'1' = 'Jan 2014 Expansion States'\
+'2' = 'Late Expansion States (> Jan 2014)'\
+'9' = 'Suppressed (Ages 0-39)';  \
+COMMENT PUF Data Item Name: PHASE_I_RT_VOLUME PHASE_II_RT_VOLUME PHASE_III_RT_VOLUME;\
+COMMENT PHASE_III_RT_VOLUME applicable to 2018 diagnosis year and later;\
+VALUE $fradvol\
+'00' = 'No radiation treatment' \
+'01' = 'Neck Lymph Node Regions' \
+'02' = 'Thoracic Lymph Node Regions' \
+'03' = 'Neck and Thoracic Lymph Node Regions' \
+'04' = 'Breast/Chest Wall Lymph Node Regions'\
+'05' = 'Abdominal Lymph Nodes' \
+'06' = 'Pelvic Lymph Nodes' \
+'07' = 'Abdominal and Pelvic Lymph Nodes' \
+'09' = 'Lymph Node Region NOS' \
+'10' = 'Eye/Orbit/Optic Nerve' \
+'11' = 'Pituitary' \
+'12' = 'Brain' \
+'13' = 'Brain (Limited)'\
+'14' = 'Spinal Cord' \
+'20' = 'Nasopharynx' \
+'21' = 'Oral Cavity' \
+'22' = 'Oropharynx' \
+'23' = 'Larynx (glottis)or hypopharynx'\
+'24' = 'Sinuses/Nasal tract' \
+'25' = 'Parotid or Other Salivary Glands' \
+'26' = 'Thyroid' \
+'29' = 'Head and Neck (NOS)' \
+'30' = 'Lung or Bronchus'\
+'31' = 'Mesothelium' \
+'32' = 'Thymus' \
+'39' = 'Chest/Lung NOS' \
+'40' = 'Breast- whole'\
+'41' = 'Breast- partial'\
+'42' = 'Chest wall' \
+'50' = 'Esophagus' \
+'51' = 'Stomach'\
+'52' = 'Small bowel'\
+'53' = 'Colon'\
+'54' = 'Rectum'\
+'55' = 'Anus'\
+'56' = 'Liver'\
+'57' = 'Biliary tree or Gallbladder'\
+'58' = 'Pancreas or Hepatopancreatic Ampulla'\
+'59' = 'Abdomen (NOS)'\
+'60' = 'Bladder - whole'\
+'61' = 'Bladder - partial'\
+'62' = 'Kidney'\
+'63' = 'Ureter'\
+'64' = 'Prostate - whole'\
+'65' = 'Prostate - partial'\
+'66' = 'Urethra'\
+'67' = 'Penis'\
+'68' = 'Testicle or Scrotum'\
+'70' = 'Ovaries or Fallopian Tubes'\
+'71' = 'Uterus or Cervix'\
+'72' = 'Vagina'\
+'73' = 'Vulva'\
+'80' = 'Skull'\
+'81' = 'Spine/Vertebral bodies'\
+'82' = 'Shoulder'\
+'83' = 'Ribs'\
+'84' = 'Hip'\
+'85' = 'Pelvic bones'\
+'86' = 'Pelvis (NOS non-visceral)'\
+'88' = 'Extremity bone (NOS)'\
+'90' = 'Skin'\
+'91' = 'Soft Tissue'\
+'92' = 'Hemibody'\
+'93' = 'Whole body'\
+'94' = 'Mantle, mini-mantle (obsolete after 2017)'\
+'95' = 'Lower extended field (obsolete after 2017)'\
+'96' = 'Inverted Y (obsolete after 2017)'\
+'97' = 'Invalid historical FORDS value'\
+'98' = 'Other'\
+'99' = 'Unknown';\
+COMMENT PUF Data Item Name: PHASE_I_RT_TO_LN PHASE_II_RT_TO_LN PHASE_III_RT_TO_LN;\
+COMMENT PHASE_III_RT_TO_LN applicable to 2018 diagnosis year and later;\
+VALUE $frtdln\
+'00' = 'No Radiation Rx to Draining Lymph Nodes'\
+'01' = 'Neck lymph node regions'\
+'02' = 'Thoracic lymph node regions'\
+'03' = 'Neck and thoracic lymph node regions'\
+'04' = 'Breast/chest wall lymph node regions'\
+'05' = 'Abdominal lymph nodes'\
+'06' = 'Pelvic lymph nodes'\
+'07' = 'Abdominal and pelvic lymph nodes'\
+'08' = 'Lymph node region NOS'\
+'88' = 'Not applicable/Radiation Primary Rx Volume is lymph nodes'\
+'99' = 'Unknown if any radiation Rx to draining lymph nodes/Unknown if radiation Rx';\
+COMMENT PUF Data Item Name: PHASE_I_DOSE_FRACT PHASE_II_DOSE_FRACT PHASE_III_DOSE_FRACT;\
+COMMENT PHASE_III_DOSE_FRACT applicable to 2018 diagnosis year and later;\
+COMMENT values 1-99997 are the actual dose in cGy;\
+VALUE $fdosefrt\
+'00000' = 'No radiation Rx'\
+'99998' = 'Not applicable, radioisotopes administered'\
+'99999' = 'Radiation Rx administered, dose unknown/Unknown if Radiation Rx administered';\
+COMMENT PUF Data Items Name: PHASE_I_NUM_FRACT PHASE_II_NUM_FRACT PHASE_III_NUM_FRACT;\
+COMMENT PHASE_III_NUM_FRACT applicable to 2018 diagnosis year and later;\
+COMMENT values 1-998 are the number of fractions administered;\
+VALUE $fnumfrt\
+'000' = 'No Radiation Rx'\
+'999' = 'Radiation Rx given,# fractions UK /UK if Radiation Rx given';\
+COMMENT PUF Data Items Name: PHASE_I_BEAM_TECH PHASE_II_BEAM_TECH PHASE_III_BEAM_TECH;\
+COMMENT PHASE_III_BEAM_TECH applicable to 2018 diagnosis year and later;\
+VALUE $fbeamtech \
+'00' = 'No radiation Rx'\
+'01' = 'External beam, NOS'\
+'02' = 'Low energy x-ray/photon therapy'\
+'03' = '2-D therapy'\
+'04' = 'Conformal or 3-D Conformal therapy'\
+'05' = 'Intensity modulated therapy'\
+'06' = 'Stereotactic radiotherapy or radiosurgery, NOS'\
+'07' = 'Stereotactic radiotherapy or radiosurgery, robotic'\
+'08' = 'Stereotactic radiotherapy or radiosurgery, Gamma Knife'\
+'09' = 'CT-guided online adaptive therapy'\
+'10' = 'MR-guided online adaptive therapy'\
+'88' = 'Not applicable'\
+'98' = 'Other, NOS'\
+'99' = 'Unknown';\
+COMMENT PUF data Item Names: PHASE_I_TOTAL_DOSE PHASE_II_TOTAL_DOSE PHASE_III_TOTAL_DOSE;\
+COMMENT PHASE_III_TOTAL_DOSE applicable to 2018 diagnosis year and later;\
+COMMENT values 1-999997 actual dose in cGy delivered;\
+VALUE $fptotdose\
+'000000' = 'No radiation Rx'\
+'999998' = 'Not applicable, radioisotopes delivered to the patient'\
+'999999' = 'Radiation Rx administered, total dose unknown/Unknown if radiation Rx administered';\
+COMMENT PUF Data Item Name: PHASE_I_RT_MODALITY PHASE_II_RT_MODALITY PHASE_III_RT_MODALITY;\
+COMMENT PHASE_III_RT_MODALITY applicable to 2018 diagnosis year and later;\
+VALUE $frtmod\
+'00' = 'No radiation treatment' \
+'01' = 'External beam, NOS' \
+'02' = 'External beam, photons'\
+'03' = 'External beam, protons'\
+'04' = 'External beam, electrons'\
+'05' = 'External beam, neutrons'\
+'06' = 'External beam, carbon ions'\
+'07' = 'Brachytheapy, NOS'\
+'08' = 'Brachytherapy, intracavitary, LDR'\
+'09' = 'Brachytherapy, intracavitary, HDR'\
+'10' = 'Brachytherapy, Interstitial, LDR'\
+'11' = 'Brachytherapy, Interstitial, HDR'\
+'12' = 'Brachytherapy, Electronic'\
+'13' = 'Radioisotopes, NOS'\
+'14' = 'Radioisotopes, Radium-223'\
+'15' = 'Radioisotopes, Strontium-89'\
+'16' = 'Radioisotopes, Strontium-90'\
+'98' = 'Radiation Rx administered, Rx modality UK'\
+'99' = 'Unknown if radiation Rx administered';\
+COMMENT PUF Data Item Name: NUMBER_PHASES_RAD_RX;\
+COMMENT applicable to 2018 diagnosis year and later;\
+VALUE $fnphases\
+'00' = 'No Radiation Rx'\
+'01' = '1 Phase'\
+'02' = '2 Phases'\
+'03' = '3 Phases'\
+'04' = '4 or more Phases'\
+'99' = 'Unknown number of phases/Unknown if Radiation Rx administered';\
+COMMENT PUF data item name: RAD_RX_DISC_EARLY APPLICABLE;\
+COMMENT applicable to 2018 diagnosis year and later;\
+VALUE $fraddisc\
+'00' = 'No Radiation Rx'\
+'01' = 'Radiation Rx completed as prescribed'\
+'02' = 'Radiation Rx discontinued early-toxicity'\
+'03' = 'Radiation Rx discontinued early-contraindicated due to other patient risk factors'\
+'04' = 'Radiation Rx discontinued early-patient decision'\
+'05' = 'Radiation Rx discontinued early-family decision'\
+'06' = 'Radiation Rx discontinued early-patient expired'\
+'07' = 'Radiation Rx discontinued early-reason not documented'\
+'99' = 'Unknown if Radiation Rx discontinued/Unknown if radiation Rx administered';\
+COMMENT PUF Data Item Name: TOTAL_DOSE;\
+COMMENT applicable to 2018 diagnosis year and later;\
+COMMENT values 1-999997 actual dose in cGy delivered;\
+VALUE $ftotdose\
+'000000' = 'No radiation Rx'\
+'999998' = 'Not applicable, radioisotopes delivered to the patient'\
+'999999' = 'Radiation Rx administered, dose unknown/Unknown if radiation Rx administered';\
+COMMENT PUF Data Item Names: AJCC_TNM_CLIN_N_SFX AJCC_TNM_PATH_N_SFX AJCC_TNM_POST_PATH_N_SFX;\
+COMMENT applicable to 2018 diagnosis year and later;\
+VALUE $fnsfx\
+'(sn)' = 'Sentinel node procedure with or without FNA or core needle biopsy'\
+'(f)'  = 'FNA or core needle biopsy only';\
+COMMENT PUF Data Item Names: AJCC_TNM_CLIN_T_SFX AJCC_TNM_PATH_T_SFX AJCC_TNM_POST_PATH_T_SFX; \
+COMMENT applicable to 2018 diagnosis year and later;\
+VALUE $ftsfx \
+'(m)' = 'Multiple synchronous tumors or mulitfocal tumors (Differentiated and anaplastic thyroid only)'\
+'(s)' = 'Solitary tumor (Differentiated and anaplastic thyroid only)';\
+COMMENT PUF Data Item Name: SLN_EXAM;\
+COMMENT applicable to 2018 diagnosis year and later;\
+VALUE $fsnodes_examined \
+'00' = 'No sentinel nodes were examined'\
+'95' = 'No sentinel nodes were removed, but aspiration of sentinel node(s) was performed'\
+'98' = 'Sentinel lymph nodes were biopsied, but the number is unknown'\
+'99' = 'Unknown whether sentinel nodes were examined; not applicable or negative; not stated in patient record';\
+COMMENT PUF Data Item Name: SLN_POS;\
+COMMENT applicable to 2018 diagnosis year and later;\
+VALUE $fsnodes_positive\
+'00' = 'All sentinel nodes examined are negative'\
+'95' = 'Positive aspiration of sentinel lymph node(s) was performed'\
+'97' = 'Positive sentinel nodes are documented, but the number is unspecified; for breast only: SLN and RLND occurred during the same procedure'\
+'98' = 'No sentinel nodes were biopsied'\
+'99' = 'Unknown whether sentinel nodes are positive; not applicable; not stated in patient record';\
+COMMENT PUF Data Item Name: NO_HSD_QUAR_2020;\
+VALUE $f2020ed\
+'1' = '>= 15.3%'\
+'2' = '9.1%-15.2%'\
+'3' = '5.0%-9.0%'\
+'4' = '< 5.0%';\
+COMMENT PUF Data Item Name: MED_INC_QUAR_2020;\
+VALUE $f2020inc\
+'1' = '< $46,277'\
+'2' = '$46,227-$57,856'\
+'3' = '$57,857-$74,062'\
+'4' = '>= $74,063';\
+COMMENT PUF Data Item Name: SARSCOV2_POS;\
+COMMENT applicable to 2020 diagnosis year and later;\
+VALUE $fcov_pos\
+'0' = 'Patient did not test positive for active SARS-CoV-2: No positive test'\
+'1' = 'Patient tested positive for active SARS-CoV-2; test positive on at least one test'\
+'9' = 'Unknown if tested; test done, results unknown';\
+COMMENT PUF Data Item Name: SARSCOV2_TEST;\
+COMMENT applicable to 2020 diagnosis year and later;\
+VALUE $fcov_test\
+'0' = 'Patient not tested for SARS-CoV-2: facility records support that patient did not undergo pre-admit or in-hospital testing'\
+'1' = 'Patient tested for Active SARS-CoV-2'\
+'9' = 'Unknown if patient tested for SARS-CoV-2/No facility record of preadmit hospital testing of SARS-CoV-2';\
+\
+COMMENT PUF Data Item Name: AJCC_TNM_POST_CLIN_YC_N_SUF;\
+COMMENT applicable to 2021 diagnosis year and later;\
+VALUE $fAJCC_TNM_POST_CLIN_YC_N_SUF\
+'(sn)'='Sentinel node procedure with or without FNA or core needle biopsy'\
+'(f)'='FNA or core needle biopsy only';\
+\
+COMMENT PUF Data Item Name: AJCC_TNM_POST_CLIN_YC_T_SUF;\
+COMMENT applicable to 2021 diagnosis year and later;\
+VALUE $fAJCC_TNM_POST_CLIN_YC_T_SUF\
+'(m)' = 'Multiple synchronous tumors OR Multifocal tumor (differentiated and anaplastic thyroid only'\
+'(s)' = 'Solitary tumor (differentiated and anaplastic thyroid only)'}

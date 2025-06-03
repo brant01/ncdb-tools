@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# Data - NEVER commit any data files
+data/
+*.csv
+*.txt
+*.dat
+*.parquet
+*.feather
+*.json
+*.xml
+*.sas
+
+# Documentation/instruction files
+development-guidelines.md
+CLAUDE.md
+claude.md
+ncdb_instructions.md
+
+# Results and outputs
+results/
+outputs/
+figures/
+*.log
+
+# Environment
+.env
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Jupyter
+.ipynb_checkpoints
+*.ipynb
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/

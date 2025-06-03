@@ -1,0 +1,36 @@
+[project]
+name = "ncdb-tools"
+version = "0.1.0"
+description = "Tools for managing and analyzing National Cancer Database (NCDB) data"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "polars>=0.19.0",
+    "click>=8.0.0",
+    "rich>=10.0.0",
+    "pyarrow>=10.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "ruff>=0.0.280",
+    "mypy>=1.0.0",
+]
+
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.ruff]
+line-length = 88
+target-version = "py39"
+select = ["E", "F", "I", "N", "W", "RUF"]
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
