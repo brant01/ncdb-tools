@@ -115,13 +115,13 @@ def build_dataset(
 
 def _load_column_definitions(columns_file: Path) -> List[Dict[str, Union[str, int]]]:
     """Load column definitions from CSV file."""
-    df = pl.read_csv(columns_file, has_header=False)
+    df = pl.read_csv(columns_file)
     
     columns = []
-    for row in df.iter_rows():
-        name = row[0]
-        start = int(row[1]) - 1  # Convert to 0-based index
-        end = int(row[2])  # End position is inclusive
+    for row in df.iter_rows(named=True):
+        name = row["name"]
+        start = int(row["start"]) - 1  # Convert to 0-based index
+        end = int(row["end"])  # End position is inclusive
         
         columns.append({
             "name": name,

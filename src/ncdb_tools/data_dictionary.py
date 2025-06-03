@@ -73,7 +73,7 @@ def generate_data_dictionary(
     else:
         df = pl.scan_parquet(dataset_path / "*.parquet")
     
-    schema = df.schema
+    schema = df.collect_schema()
     
     # Process columns in batches
     all_entries = []
@@ -133,14 +133,29 @@ def generate_data_dictionary(
                         median_val = col_series.median()
                         
                         # Only convert numeric types to float
-                        if min_val is not None and hasattr(min_val, '__float__'):
-                            entry["min"] = float(min_val)
-                        if max_val is not None and hasattr(max_val, '__float__'):
-                            entry["max"] = float(max_val)
-                        if mean_val is not None and hasattr(mean_val, '__float__'):
-                            entry["mean"] = round(float(mean_val), 2)
-                        if median_val is not None and hasattr(median_val, '__float__'):
-                            entry["median"] = float(median_val)
+                        if min_val is not None:
+                            try:
+                                entry["min"] = float(min_val)  # type: ignore
+                            except (TypeError, ValueError):
+                                entry["min"] = str(min_val)
+                        
+                        if max_val is not None:
+                            try:
+                                entry["max"] = float(max_val)  # type: ignore
+                            except (TypeError, ValueError):
+                                entry["max"] = str(max_val)
+                        
+                        if mean_val is not None:
+                            try:
+                                entry["mean"] = round(float(mean_val), 2)  # type: ignore
+                            except (TypeError, ValueError):
+                                pass
+                        
+                        if median_val is not None:
+                            try:
+                                entry["median"] = float(median_val)  # type: ignore
+                            except (TypeError, ValueError):
+                                pass
                     except Exception:
                         pass
             
