@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Test script for ncdb_tools - processes a single file."""
+"""Example script demonstrating individual ncdb_tools functions on a single file."""
 
 import sys
 from pathlib import Path

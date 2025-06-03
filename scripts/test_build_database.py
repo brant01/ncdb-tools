@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-"""Test the high-level build_database function."""
+"""Example script demonstrating the high-level build_database function."""
 
 import ncdb_tools
 
-# Just pass the directory - the function handles everything else
+# Update this path to your NCDB data directory
 data_dir = "/Volumes/jabrant/Jason/NCDB/NCDB_PUF_DATA_Sep-14-2024"
 
 print("Building NCDB database...")
