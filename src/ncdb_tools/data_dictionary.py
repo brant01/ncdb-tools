@@ -132,15 +132,16 @@ def generate_data_dictionary(
                         mean_val = col_series.mean()
                         median_val = col_series.median()
                         
-                        if min_val is not None:
+                        # Only convert numeric types to float
+                        if min_val is not None and hasattr(min_val, '__float__'):
                             entry["min"] = float(min_val)
-                        if max_val is not None:
+                        if max_val is not None and hasattr(max_val, '__float__'):
                             entry["max"] = float(max_val)
-                        if mean_val is not None:
+                        if mean_val is not None and hasattr(mean_val, '__float__'):
                             entry["mean"] = round(float(mean_val), 2)
-                        if median_val is not None:
+                        if median_val is not None and hasattr(median_val, '__float__'):
                             entry["median"] = float(median_val)
-                    except:
+                    except Exception:
                         pass
             
             all_entries.append(entry)
