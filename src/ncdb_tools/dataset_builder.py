@@ -18,14 +18,15 @@ def build_dataset(
     batch_size: int = 10000,
 ) -> Path:
     """Build parquet dataset from NCDB fixed-width text file.
-    
+
     Args:
         input_file: Path to input .dat file
-        sas_labels_file: Path to SAS labels file (required for column positions and labels)
+        sas_labels_file: Path to SAS labels file (required for column
+                         positions and labels)
         output_file: Optional output path (defaults to same name with .parquet)
         columns_file: Optional path to columns.csv file (overrides SAS column positions)
         batch_size: Number of rows to process at once
-        
+
     Returns:
         Path to created parquet file
     """
@@ -54,7 +55,9 @@ def build_dataset(
         # Parse from SAS file
         column_defs = parse_column_positions(sas_path)
         if not column_defs:
-            raise ValueError(f"Could not parse column positions from SAS file: {sas_path}")
+            raise ValueError(
+                f"Could not parse column positions from SAS file: {sas_path}"
+            )
 
     # Load labels from SAS file
     variable_labels, value_formats = parse_sas_labels(sas_path)
@@ -164,14 +167,16 @@ def _apply_transformations(df: pl.DataFrame) -> pl.DataFrame:
                     .cast(pl.Int64, strict=False)
                     .alias(col)
                 ])
-            except:
+            except Exception:
                 # If conversion fails, keep as string
                 pass
 
     return df
 
 
-def _apply_value_labels(df: pl.DataFrame, value_formats: Dict[str, Dict[str, str]]) -> pl.DataFrame:
+def _apply_value_labels(
+    df: pl.DataFrame, value_formats: Dict[str, Dict[str, str]]
+) -> pl.DataFrame:
     """Apply value labels to create descriptive columns."""
     for col, value_map in value_formats.items():
         if col in df.columns:

@@ -56,3 +56,4 @@ figures/
 .pytest_cache/
 .coverage
 htmlcov/
+/claude_config

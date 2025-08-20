@@ -15,22 +15,22 @@ def build_database(
     data_dir: Union[str, Path],
     output_subdir: Optional[str] = None,
     batch_size: int = 10000,
-) -> Dict[str, Path]:
+) -> Dict[str, Any]:
     """
     Build complete NCDB database from directory of .dat files.
-    
+
     This function:
     1. Finds all .dat files in the directory
     2. Locates the SAS labels file
     3. Creates a new subdirectory for output
     4. Converts all .dat files to .parquet
     5. Generates a comprehensive data dictionary
-    
+
     Args:
         data_dir: Directory containing NCDB .dat files and SAS labels file
         output_subdir: Name for output subdirectory (defaults to ncdb_parquet_YYYYMMDD)
         batch_size: Number of rows to process at once during conversion
-        
+
     Returns:
         Dictionary with paths to:
         - output_dir: Path to created output directory
@@ -38,7 +38,7 @@ def build_database(
         - data_dictionary_csv: Path to CSV dictionary
         - data_dictionary_json: Path to JSON dictionary
         - data_dictionary_html: Path to HTML dictionary
-        
+
     Example:
         >>> # Simple usage - just pass the directory
         >>> paths = build_database("/path/to/NCDB_DATA/")
@@ -61,7 +61,9 @@ def build_database(
         raise FileNotFoundError(f"No SAS labels file found in {data_dir}")
     if len(sas_files) > 1:
         # Pick the one with "label" in the name, or the first one
-        sas_file = next((f for f in sas_files if "label" in f.name.lower()), sas_files[0])
+        sas_file = next(
+            (f for f in sas_files if "label" in f.name.lower()), sas_files[0]
+        )
         print(f"Multiple SAS files found, using: {sas_file.name}")
     else:
         sas_file = sas_files[0]
@@ -80,7 +82,7 @@ def build_database(
     # Convert each .dat file to parquet and collect summary info
     parquet_files = []
     file_summaries: List[Dict[str, Any]] = []
-    total_size_mb = 0
+    total_size_mb = 0.0
     start_time = time.time()
 
     print("\nConverting data files:")
@@ -108,7 +110,9 @@ def build_database(
             total_size_mb += compressed_size_mb
 
             # Extract tumor type from filename
-            tumor_type = dat_file.name.replace("NCDBPUF_", "").replace(".3.2021.0.dat", "")
+            tumor_type = dat_file.name.replace(
+                "NCDBPUF_", ""
+            ).replace(".3.2021.0.dat", "")
 
             file_summaries.append({
                 "tumor_type": tumor_type,
@@ -145,7 +149,9 @@ def build_database(
         "compressed_size": total_size_mb,
         "processing_time": processing_time_str,
         "output_directory": str(output_dir),
-        "files": sorted(file_summaries, key=lambda x: x["rows"], reverse=True)  # Sort by row count
+        "files": sorted(
+            file_summaries, key=lambda x: x["rows"], reverse=True
+        )  # Sort by row count
     }
 
     # Generate data dictionary from all parquet files
@@ -159,7 +165,6 @@ def build_database(
         include_stats=True,
         sample_size=10000,
         sas_labels_file=sas_file,
-        dataset_summary=dataset_summary,
     )
 
     print("✓ Data dictionary created")

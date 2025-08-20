@@ -2,15 +2,17 @@
 
 import re
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Any, Dict, List, Tuple
 
 
-def parse_sas_labels(sas_file_path: Path) -> Tuple[Dict[str, str], Dict[str, Dict[str, str]]]:
+def parse_sas_labels(
+    sas_file_path: Path
+) -> Tuple[Dict[str, str], Dict[str, Dict[str, str]]]:
     """Parse SAS file to extract variable labels and value formats.
-    
+
     Args:
         sas_file_path: Path to SAS labels file
-        
+
     Returns:
         Tuple of (variable_labels, value_formats)
         - variable_labels: Dict mapping variable names to descriptions
@@ -35,7 +37,9 @@ def parse_sas_labels(sas_file_path: Path) -> Tuple[Dict[str, str], Dict[str, Dic
     value_formats = {}
 
     # Look for proc format value statements
-    format_blocks = re.findall(r'value\s+(\w+)(.*?);\s*(?=value|\s*run|$)', content, re.DOTALL | re.IGNORECASE)
+    format_blocks = re.findall(
+        r'value\s+(\w+)(.*?);\s*(?=value|\s*run|$)', content, re.DOTALL | re.IGNORECASE
+    )
 
     for format_name, format_content in format_blocks:
         # Extract value mappings
@@ -59,19 +63,19 @@ def parse_sas_labels(sas_file_path: Path) -> Tuple[Dict[str, str], Dict[str, Dic
     return variable_labels, value_formats
 
 
-def parse_column_positions(sas_file_path: Path) -> List[Dict[str, any]]:
+def parse_column_positions(sas_file_path: Path) -> List[Dict[str, Any]]:
     """Parse column positions from SAS input statement.
-    
+
     Args:
         sas_file_path: Path to SAS file
-        
+
     Returns:
         List of column definitions with name, start, end positions
     """
     with open(sas_file_path, 'r', encoding='latin-1') as f:
         content = f.read()
 
-    columns = []
+    columns: List[Dict[str, Any]] = []
 
     # Find input statement
     input_section = re.search(r'input\s+(.*?);\s*', content, re.DOTALL | re.IGNORECASE)
