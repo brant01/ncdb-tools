@@ -1,6 +1,6 @@
 """NCDB Tools - Tools for managing and analyzing National Cancer Database data."""
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 # New primary API (nsqip_tools style)
 from ._internal.memory_utils import get_memory_info, get_recommended_memory_limit
@@ -38,6 +38,6 @@ except ImportError:
         from importlib_metadata import version as _version  # type: ignore
         __version__ = _version("ncdb-tools")
     except ImportError:
-        __version__ = "0.1.0"
+        __version__ = "0.2.0"
 except Exception:
-    __version__ = "0.1.0"
+    __version__ = "0.2.0"
