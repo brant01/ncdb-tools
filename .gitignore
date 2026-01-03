@@ -26,10 +26,8 @@ scripts/
 *.pdf
 *.rtf
 
-# Documentation/instruction files
+# Documentation/instruction files (legacy, no longer used)
 development-guidelines.md
-CLAUDE.md
-claude.md
 ncdb_instructions.md
 
 # Results and outputs
@@ -56,4 +54,10 @@ figures/
 .pytest_cache/
 .coverage
 htmlcov/
-/claude_config
+
+# Claude Code - local settings only
+.claude/settings.local.json
+
+# Allow Claude Code config files (override *.json exclusion)
+!CLAUDE.md
+!.claude/settings.json
