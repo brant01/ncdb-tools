@@ -1,66 +1,71 @@
 # ncdb-tools
 
-Tools for processing and analyzing National Cancer Database (NCDB) data.
+Python package for working with NCDB (National Cancer Database) data.
 
 ## Tech Stack
-- **Python** 3.10+ with strict type hints
-- **Polars** for dataframes (not pandas)
-- **PyArrow** for parquet format
-- **pytest** for testing
-- **ruff** for linting, **mypy** for type checking
+- **Language:** Python 3.10+
+- **Data Processing:** Polars, PyArrow
+- **Package Management:** uv
+- **Testing:** pytest
 
 ## Architecture
 ```
 src/ncdb_tools/
-├── builder.py          # Primary API: build_parquet_dataset()
-├── query.py            # NCDBQuery fluent API for filtering
-├── data_dictionary.py  # Data dictionary generation
-├── config.py           # Environment/config management
-├── constants.py        # NCDB-specific constants
-└── _internal/          # Internal utilities
-    ├── ingest.py       # Data file reading/parsing
-    ├── sas_parser.py   # SAS label file parsing
-    ├── transform.py    # Data transformations
-    ├── inspect.py      # Parquet inspection
-    └── memory_utils.py # Memory management
+├── __init__.py          # Public API exports
+├── builder.py           # build_parquet_dataset() - ETL orchestration
+├── query.py             # NCDBQuery class - fluent query API
+├── config.py            # Environment variable management
+├── constants.py         # Variable types, column groupings
+├── data_dictionary.py   # DataDictionaryGenerator class
+└── _internal/
+    ├── ingest.py        # Fixed-width .dat file parsing
+    ├── sas_parser.py    # SAS label file parsing
+    ├── transform.py     # Data transformations (age, site groups, etc.)
+    ├── inspect.py       # File inspection utilities
+    ├── validation.py    # Input validation utilities
+    └── memory_utils.py  # System memory detection
 ```
 
 ## Quick Commands
 ```bash
-# Run tests
+# Install dependencies
+uv sync
+
+# Run tests (unit only - no real data needed)
+uv run pytest -m unit
+
+# Run all tests (requires NCDB data configured)
 uv run pytest
 
-# Run tests with coverage
-uv run pytest --cov=ncdb_tools
-
-# Type checking
-uv run mypy src/
-
-# Linting
-uv run ruff check src/ tests/
-uv run ruff format src/ tests/
+# Build package
+uv build
 ```
 
-## Key Concepts
+## Key Patterns
 
-### Primary API
-```python
-from ncdb_tools import build_parquet_dataset, load_data
+### Data Flow
+1. Fixed-width .dat files → `ingest.py` + `sas_parser.py` → raw parquet
+2. Raw parquet → `transform.py` → transformed parquet with derived columns
+3. Transformed parquet → `NCDBQuery` → filtered results
 
-# Convert .dat files to parquet
-result = build_parquet_dataset(data_dir="path/to/ncdb/data")
+### Important Variables
+- `NEVER_NUMERIC_COLUMNS` in `constants.py` - columns that must stay as strings
+- `PRIMARY_SITE_COLUMN`, `HISTOLOGY_COLUMN` - cancer classification columns
+- Derived: `AGE_AS_INT`, `AGE_IS_90_PLUS`, `SITE_GROUP`, `HISTOLOGY_GROUP`
 
-# Query the data
-query = load_data(result["parquet_dir"])
-query.filter_by_year(2020).filter_by_primary_site("C50").collect()
+### Environment Configuration
+```bash
+NCDB_DATA_DIR=/path/to/ncdb/data
+NCDB_OUTPUT_DIR=/path/to/output
+NCDB_MEMORY_LIMIT=8GB
 ```
 
-### Environment Variables
-- `NCDB_DATA_DIR` - Path to raw NCDB .dat files
-- `NCDB_OUTPUT_DIR` - Output directory for parquet files
-- `NCDB_MEMORY_LIMIT` - Memory limit (e.g., "4GB")
+## Testing
+- Unit tests use synthetic data (no real NCDB files needed)
+- Integration tests require real data paths in environment
+- Markers: `@unit`, `@integration`, `@slow`, `@requires_data`
 
-### Data Notes
+## Data Notes
 - NCDB .dat files are fixed-width (1032 chars, 338 columns)
+- Requires SAS labels file for column definitions
 - All data files are gitignored (PHI considerations)
-- Use `NEVER_NUMERIC_COLUMNS` constant for columns that must stay categorical

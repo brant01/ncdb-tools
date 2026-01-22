@@ -274,11 +274,15 @@ class NCDBQuery:
             return f"NCDBQuery(path={self.parquet_path.name})"
 
 
-def load_data(parquet_path: Union[str, Path]) -> NCDBQuery:
+def load_data(
+    parquet_path: Union[str, Path],
+    year: Optional[Union[int, List[int]]] = None,
+) -> NCDBQuery:
     """Load NCDB data from a parquet dataset for querying.
 
     Args:
         parquet_path: Path to parquet file or directory containing parquet files
+        year: Optional year(s) to filter to immediately
 
     Returns:
         NCDBQuery instance for filtering and analysis
@@ -290,6 +294,11 @@ def load_data(parquet_path: Union[str, Path]) -> NCDBQuery:
         ...       .filter_by_year([2020, 2021])
         ...       .collect())
 
+        >>> # Load with year filter
+        >>> df = (load_data("/path/to/ncdb_parquet/", year=2021)
+        ...       .filter_by_histology([8140])  # Adenocarcinoma
+        ...       .collect())
+
         >>> # Chain with Polars operations
         >>> df = (load_data("/path/to/ncdb_parquet/")
         ...       .filter_by_histology([8140])  # Adenocarcinoma
@@ -298,4 +307,9 @@ def load_data(parquet_path: Union[str, Path]) -> NCDBQuery:
         ...       .agg(pl.count())
         ...       .collect())
     """
-    return NCDBQuery(parquet_path)
+    query = NCDBQuery(parquet_path)
+
+    if year is not None:
+        query = query.filter_by_year(year)
+
+    return query
