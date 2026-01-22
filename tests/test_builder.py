@@ -5,6 +5,7 @@ from pathlib import Path
 import tempfile
 import shutil
 
+from ncdb_tools import NCDBValidationError
 from ncdb_tools.builder import build_parquet_dataset, detect_dataset_type
 
 
@@ -55,7 +56,7 @@ class TestBuildParquetDataset:
     
     def test_build_nonexistent_directory(self):
         """Test building dataset from nonexistent directory."""
-        with pytest.raises(FileNotFoundError):
+        with pytest.raises(NCDBValidationError):
             build_parquet_dataset("/nonexistent/directory")
     
     def test_build_with_custom_memory_limit(self, sample_data_dir, temp_output_dir):

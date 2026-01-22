@@ -1,14 +1,18 @@
 """High-level database builder for NCDB data."""
 
 import datetime
+import logging
 import time
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
 
 import polars as pl
 
+from ._internal.validation import sanitize_path_for_logging, validate_directory
 from .data_dictionary import generate_data_dictionary
 from .dataset_builder import build_dataset
+
+logger = logging.getLogger(__name__)
 
 
 def build_database(
@@ -44,16 +48,16 @@ def build_database(
         >>> paths = build_database("/path/to/NCDB_DATA/")
         >>> print(f"Created database in: {paths['output_dir']}")
     """
-    data_dir = Path(data_dir)
-    if not data_dir.exists():
-        raise FileNotFoundError(f"Data directory not found: {data_dir}")
+    data_dir = validate_directory(
+        data_dir, must_exist=True, description="data directory"
+    )
 
     # Find all .dat files
     dat_files = list(data_dir.glob("*.dat"))
     if not dat_files:
         raise FileNotFoundError(f"No .dat files found in {data_dir}")
 
-    print(f"Found {len(dat_files)} data files")
+    logger.info("Found %d data files", len(dat_files))
 
     # Find SAS labels file
     sas_files = list(data_dir.glob("*.sas"))
@@ -64,11 +68,11 @@ def build_database(
         sas_file = next(
             (f for f in sas_files if "label" in f.name.lower()), sas_files[0]
         )
-        print(f"Multiple SAS files found, using: {sas_file.name}")
+        logger.info("Multiple SAS files found, using: %s", sas_file.name)
     else:
         sas_file = sas_files[0]
 
-    print(f"Using SAS labels file: {sas_file.name}")
+    logger.info("Using SAS labels file: %s", sas_file.name)
 
     # Create output directory
     if output_subdir is None:
@@ -77,7 +81,7 @@ def build_database(
 
     output_dir = data_dir / output_subdir
     output_dir.mkdir(exist_ok=True)
-    print(f"\nCreating output in: {output_dir}")
+    logger.info("Creating output in: %s", sanitize_path_for_logging(output_dir))
 
     # Convert each .dat file to parquet and collect summary info
     parquet_files = []
@@ -85,12 +89,14 @@ def build_database(
     total_size_mb = 0.0
     start_time = time.time()
 
-    print("\nConverting data files:")
+    logger.info("Converting data files...")
 
     for i, dat_file in enumerate(dat_files, 1):
         original_size_mb = dat_file.stat().st_size / 1024 / 1024
-        print(f"\n[{i}/{len(dat_files)}] Processing {dat_file.name}")
-        print(f"      Size: {original_size_mb:.1f} MB")
+        logger.info(
+            "[%d/%d] Processing %s (%.1f MB)",
+            i, len(dat_files), dat_file.name, original_size_mb
+        )
 
         try:
             # Build parquet file in output directory
@@ -123,16 +129,16 @@ def build_database(
             })
 
             parquet_files.append(parquet_path)
-            print(f"      ✓ Created: {parquet_path.name}")
+            logger.info("Created: %s", parquet_path.name)
 
-        except Exception as e:
-            print(f"      ✗ Error: {e}")
+        except (OSError, ValueError, pl.exceptions.ComputeError) as e:
+            logger.error("Failed to process %s: %s", dat_file.name, e)
             continue
 
     if not parquet_files:
         raise RuntimeError("No parquet files were created successfully")
 
-    print(f"\n✓ Converted {len(parquet_files)} files successfully")
+    logger.info("Converted %d files successfully", len(parquet_files))
 
     # Calculate processing time
     processing_time = time.time() - start_time
@@ -140,22 +146,21 @@ def build_database(
     if processing_time > 60:
         processing_time_str = f"{processing_time/60:.1f} minutes"
 
-    # Create dataset summary for HTML dictionary
+    # Create dataset summary (for future use in HTML dictionary)
     total_rows = sum(fs["rows"] for fs in file_summaries)
-    dataset_summary = {
+    _dataset_summary = {
         "total_rows": total_rows,
         "file_count": len(file_summaries),
-        "year": 2021,
         "compressed_size": total_size_mb,
         "processing_time": processing_time_str,
         "output_directory": str(output_dir),
         "files": sorted(
             file_summaries, key=lambda x: x["rows"], reverse=True
-        )  # Sort by row count
+        ),
     }
 
     # Generate data dictionary from all parquet files
-    print("\nGenerating data dictionary...")
+    logger.info("Generating data dictionary...")
 
     # Use the output directory as the dataset path (it contains all parquet files)
     dict_paths = generate_data_dictionary(
@@ -167,7 +172,7 @@ def build_database(
         sas_labels_file=sas_file,
     )
 
-    print("✓ Data dictionary created")
+    logger.info("Data dictionary created")
 
     # Create summary report
     summary_path = output_dir / "conversion_summary.txt"
@@ -183,7 +188,7 @@ def build_database(
             f.write(f"  - {pf.name}\n")
         f.write(f"\nTotal files: {len(parquet_files)}\n")
 
-    print(f"\n✓ Summary written to: {summary_path.name}")
+    logger.info("Summary written to: %s", summary_path.name)
 
     # Return paths
     result = {
@@ -195,9 +200,9 @@ def build_database(
         "summary": summary_path,
     }
 
-    print("\n✅ Database build complete!")
-    print(f"   Output directory: {output_dir}")
-    print(f"   Files converted: {len(parquet_files)}")
-    print(f"   Data dictionary: {dict_paths['html'].name}")
+    logger.info(
+        "Database build complete: %d files in %s",
+        len(parquet_files), output_dir.name
+    )
 
     return result

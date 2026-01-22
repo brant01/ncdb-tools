@@ -11,6 +11,11 @@ from typing import Dict, Optional, Union
 from ._internal.inspect import inspect_parquet_files
 from ._internal.memory_utils import get_recommended_memory_limit, warn_if_low_memory
 from ._internal.transform import apply_transformations
+from ._internal.validation import (
+    sanitize_path_for_logging,
+    validate_directory,
+    validate_memory_limit,
+)
 from .data_dictionary import DataDictionaryGenerator
 
 # Configure logging
@@ -54,7 +59,7 @@ def build_parquet_dataset(
 
     Raises:
         FileNotFoundError: If data_dir doesn't exist or contains no NCDB files
-        ValueError: If memory_limit format is invalid
+        NCDBValidationError: If memory_limit format is invalid or paths are invalid
 
     Examples:
         >>> # Build dataset with default settings
@@ -68,15 +73,19 @@ def build_parquet_dataset(
         ...     memory_limit="8GB"
         ... )
     """
-    data_dir = Path(data_dir)
-
-    if not data_dir.exists():
-        raise FileNotFoundError(f"Data directory does not exist: {data_dir}")
+    # Validate inputs
+    data_dir = validate_directory(
+        data_dir, must_exist=True, description="data directory"
+    )
 
     # Set up memory limit
     if memory_limit is None:
         memory_limit = get_recommended_memory_limit()
-        logger.info(f"Using recommended memory limit: {memory_limit}")
+        logger.info("Using recommended memory limit: %s", memory_limit)
+    else:
+        # Validate user-provided memory limit
+        validate_memory_limit(memory_limit)
+        logger.info("Using memory limit: %s", memory_limit)
 
     warn_if_low_memory("NCDB dataset building")
 
@@ -84,10 +93,11 @@ def build_parquet_dataset(
     if output_dir is None:
         timestamp = datetime.now().strftime("%Y%m%d")
         output_dir = data_dir / f"ncdb_parquet_{timestamp}"
+        output_dir.mkdir(parents=True, exist_ok=True)
     else:
-        output_dir = Path(output_dir)
-
-    output_dir.mkdir(parents=True, exist_ok=True)
+        output_dir = validate_directory(
+            output_dir, must_exist=False, create=True, description="output directory"
+        )
 
     # Set up logging
     log_file = output_dir / "build.log"
@@ -98,9 +108,9 @@ def build_parquet_dataset(
     logger.addHandler(file_handler)
 
     logger.info("Starting NCDB dataset build")
-    logger.info(f"Data directory: {data_dir}")
-    logger.info(f"Output directory: {output_dir}")
-    logger.info(f"Memory limit: {memory_limit}")
+    logger.info("Data directory: %s", sanitize_path_for_logging(data_dir))
+    logger.info("Output directory: %s", sanitize_path_for_logging(output_dir))
+    logger.info("Memory limit: %s", memory_limit)
 
     try:
         # Check if we have existing parquet files or need to convert from data files

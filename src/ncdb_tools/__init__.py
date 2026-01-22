@@ -4,6 +4,7 @@ __version__ = "0.2.0"
 
 # New primary API (nsqip_tools style)
 from ._internal.memory_utils import get_memory_info, get_recommended_memory_limit
+from ._internal.validation import NCDBValidationError
 from .builder import build_parquet_dataset
 from .config import get_data_directory, get_memory_limit, get_output_directory
 
@@ -14,19 +15,22 @@ from .dataset_builder import build_dataset
 from .query import NCDBQuery, load_data
 
 __all__ = [
+    # Exceptions
+    "NCDBValidationError",
+    # Query API
     "NCDBQuery",
-    # Legacy API
-    "build_database",
-    "build_dataset",
+    "load_data",
     # New primary API
     "build_parquet_dataset",
-    "generate_data_dictionary",
     "get_data_directory",
     "get_memory_info",
     "get_memory_limit",
     "get_output_directory",
     "get_recommended_memory_limit",
-    "load_data",
+    # Legacy API
+    "build_database",
+    "build_dataset",
+    "generate_data_dictionary",
 ]
 
 try:

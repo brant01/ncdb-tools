@@ -1,5 +1,6 @@
 """Dataset builder for converting NCDB text files to parquet."""
 
+import logging
 import re
 from pathlib import Path
 from typing import Dict, List, Optional, Union
@@ -7,7 +8,10 @@ from typing import Dict, List, Optional, Union
 import polars as pl
 
 from ._internal.sas_parser import parse_column_positions, parse_sas_labels
+from ._internal.validation import validate_path
 from .constants import NCDB_RECORD_LENGTH, PARQUET_EXTENSION
+
+logger = logging.getLogger(__name__)
 
 
 def build_dataset(
@@ -29,14 +33,24 @@ def build_dataset(
 
     Returns:
         Path to created parquet file
-    """
-    input_path = Path(input_file)
-    sas_path = Path(sas_labels_file)
 
-    if not input_path.exists():
-        raise FileNotFoundError(f"Input file not found: {input_path}")
-    if not sas_path.exists():
-        raise FileNotFoundError(f"SAS labels file not found: {sas_path}")
+    Raises:
+        NCDBValidationError: If input paths are invalid
+        FileNotFoundError: If required files are not found
+    """
+    # Validate required inputs
+    input_path = validate_path(
+        input_file,
+        must_exist=True,
+        allowed_extensions=[".dat"],
+        description="input file",
+    )
+    sas_path = validate_path(
+        sas_labels_file,
+        must_exist=True,
+        allowed_extensions=[".sas"],
+        description="SAS labels file",
+    )
 
     # Determine output path
     if output_file:
@@ -47,9 +61,12 @@ def build_dataset(
     # Load column definitions
     if columns_file:
         # Use provided columns file
-        columns_path = Path(columns_file)
-        if not columns_path.exists():
-            raise FileNotFoundError(f"Columns file not found: {columns_path}")
+        columns_path = validate_path(
+            columns_file,
+            must_exist=True,
+            allowed_extensions=[".csv"],
+            description="columns file",
+        )
         column_defs = _load_column_definitions(columns_path)
     else:
         # Parse from SAS file
@@ -60,7 +77,7 @@ def build_dataset(
             )
 
     # Load labels from SAS file
-    variable_labels, value_formats = parse_sas_labels(sas_path)
+    _variable_labels, value_formats = parse_sas_labels(sas_path)
 
     # Extract tumor type from filename
     tumor_type = _extract_tumor_type(input_path.name)
@@ -167,9 +184,9 @@ def _apply_transformations(df: pl.DataFrame) -> pl.DataFrame:
                     .cast(pl.Int64, strict=False)
                     .alias(col)
                 ])
-            except Exception:
+            except Exception as e:
                 # If conversion fails, keep as string
-                pass
+                logger.debug("Could not convert column %s to numeric: %s", col, e)
 
     return df
 
