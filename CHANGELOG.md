@@ -7,18 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2025-01-22
+
 ### Added
 - `py.typed` marker for PEP 561 type hint support
 - `NCDBValidationError` exception for input validation errors
 - Path validation utilities in `_internal/validation.py`
 - Sanitized logging to avoid PHI exposure in log files
-- Project configuration files (CLAUDE.md, .claude/settings.json)
+- CHANGELOG.md following Keep a Changelog format
+- Project conventions in `.claude/rules/ncdb-conventions.md`
+- Test markers (`@unit`, `@integration`, `@slow`, `@requires_data`)
+- Synthetic data fixtures for unit tests
 
 ### Changed
 - Replace `print()` statements with proper logging in database_builder.py
-- Fix ruff target-version to match requires-python (3.10)
+- Restructure constants.py with `STRING_VARIABLES`, `NEVER_NUMERIC` patterns
+- Clean up `__init__.py` exports to match nsqip_tools style
+- Add optional `year` parameter to `load_data()` for consistency
+- Align project structure with nsqip_tools for cross-project consistency
 
 ### Fixed
+- Fix ruff target-version to match requires-python (3.10)
 - Remove duplicate dependency-groups section from pyproject.toml
 - Validate memory_limit parameter before use
 
